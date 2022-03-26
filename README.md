@@ -1,0 +1,1 @@
+to start the app, run yarn start. Application is served in localhost:8080
