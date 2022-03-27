@@ -2,14 +2,39 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 
-const app = express();
-const port = process.env.PORT || 8080;
+const {save} = require('./save');
+
+// import express from 'express';
+// import path from 'path';
+// import bodyParser from 'body-parser';
+// const __dirname = path.resolve();
+
 
 
 // var React = require('react');
 // // Our bundle expects React to be a global
 // global.React = React;
 // var hCardComponent = require('./public/main.js').default;
+
+
+
+const app = express();
+const port = process.env.PORT || 8080;
+
+
+
+
+
+// var React = require('react');
+// // Our bundle expects React to be a global
+// global.React = React;
+// var hCardComponent = require('./public/main.js').default;
+
+// const save = (props) => {
+//     console.log('hello',props);
+// };
+
+
 
 
 app.use(bodyParser.urlencoded());
@@ -25,6 +50,7 @@ app.get('/', function(req, res) {
 
 app.post('/update',(request,response) => {
     console.log('updated data',request.body);
+    save(request);
     response.send('POST request update success');
 })
 
