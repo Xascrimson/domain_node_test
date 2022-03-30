@@ -1,13 +1,13 @@
 
 
-const save = (request) => {
+const save = (request,userData) => {
     const path = request.route.path;
     const body = request.body;
-    //TODO, still need to figure out whether to create an RDS database, or modify 
     switch(path){
         case '/update':
             console.log('updating');
             console.log('body',body);
+            return {...userData,...body}
             break;
         case 'submit':
             console.log('submission');

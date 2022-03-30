@@ -4,6 +4,8 @@ const bodyParser = require("body-parser");
 
 const { save } = require("./save");
 
+let { userData } = require("./store");
+
 // import express from 'express';
 // import path from 'path';
 // import bodyParser from 'body-parser';
@@ -28,19 +30,6 @@ app.set("view engine", "pug");
 //     console.log('hello',props);
 // };
 
-let userData = {
-    givenName: "Sam",
-    surname: "Fairfax",
-    email: "sam.fairfax@fairfaxmedia.com.au",
-    phone: "0292822833",
-    houseNumber: "100",
-    street: "Harris Street",
-    suburb: "Pyrmont",
-    state: "NSW",
-    postcode: "2009",
-    country: "Australia",
-};
-
 app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
 
@@ -49,19 +38,18 @@ app.use(express.static("public"));
 
 // sendFile will go here
 app.get("*", function (req, res) {
-    // res.sendFile(path.join(__dirname, '/index.html'));
     res.render("index.pug", { data: JSON.stringify(userData) });
 });
 
+//POST update, updating userData based on input selection
 app.post("/update", (request, response) => {
-    console.log("updated data", request.body);
-    save(request);
+    userData = save(request, userData);
     response.send("POST request update success");
 });
 
+//POST submit, update hcard with new user data, + future can send to parameter store etc, so all servers update with new data.
 app.post("/submit", (request, response) => {
-    console.log("submitted data", request.body);
-    response.send("User Successfully updated");
+    response.redirect("/");
 });
 
 app.listen(port);
