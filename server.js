@@ -11,10 +11,10 @@ const {save} = require('./save');
 
 
 
-// var React = require('react');
-// // Our bundle expects React to be a global
-// global.React = React;
-// var hCardComponent = require('./public/main.js').default;
+var React = require('react');
+// Our bundle expects React to be a global
+global.React = React;
+var hCardComponent = require('./public/main.js').default;
 
 
 
