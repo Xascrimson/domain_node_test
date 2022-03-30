@@ -1,13 +1,13 @@
 
 
-var save = function save(request) {
-    var path = request.route.path;
-    var body = request.body;
+const save = (request) => {
+    const path = request.route.path;
+    const body = request.body;
     //TODO, still need to figure out whether to create an RDS database, or modify 
-    switch (path) {
+    switch(path){
         case '/update':
             console.log('updating');
-            console.log('body', body);
+            console.log('body',body);
             break;
         case 'submit':
             console.log('submission');
@@ -17,4 +17,4 @@ var save = function save(request) {
     }
 };
 
-module.exports = { save: save };
+module.exports = {save};
