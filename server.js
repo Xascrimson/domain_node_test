@@ -1,29 +1,23 @@
-const express = require('express');
-const path = require('path');
-const bodyParser = require('body-parser');
+const express = require("express");
+const path = require("path");
+const bodyParser = require("body-parser");
 
-const {save} = require('./save');
+const { save } = require("./save");
 
 // import express from 'express';
 // import path from 'path';
 // import bodyParser from 'body-parser';
 // const __dirname = path.resolve();
 
-
-
-var React = require('react');
-// Our bundle expects React to be a global
-global.React = React;
-var hCardComponent = require('./public/main.js').default;
-
-
+// var React = require('react');
+// // Our bundle expects React to be a global
+// global.React = React;
+// var hCardComponent = require('./public/main.js').default;
 
 const app = express();
 const port = process.env.PORT || 8080;
 
-
-
-
+app.set("view engine", "pug");
 
 // var React = require('react');
 // // Our bundle expects React to be a global
@@ -34,30 +28,41 @@ const port = process.env.PORT || 8080;
 //     console.log('hello',props);
 // };
 
-
-
+let userData = {
+    givenName: "Sam",
+    surname: "Fairfax",
+    email: "sam.fairfax@fairfaxmedia.com.au",
+    phone: "0292822833",
+    houseNumber: "100",
+    street: "Harris Street",
+    suburb: "Pyrmont",
+    state: "NSW",
+    postcode: "2009",
+    country: "Australia",
+};
 
 app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
 
-//serving up files in public 
+//serving up files in public
 app.use(express.static("public"));
 
 // sendFile will go here
-app.get('/', function(req, res) {
-  res.sendFile(path.join(__dirname, '/index.html'));
+app.get("*", function (req, res) {
+    // res.sendFile(path.join(__dirname, '/index.html'));
+    res.render("index.pug", { data: JSON.stringify(userData) });
 });
 
-app.post('/update',(request,response) => {
-    console.log('updated data',request.body);
+app.post("/update", (request, response) => {
+    console.log("updated data", request.body);
     save(request);
-    response.send('POST request update success');
-})
+    response.send("POST request update success");
+});
 
-app.post('/submit',(request,response) => {
-    console.log('submitted data',request.body);
-    response.send('User Successfully updated');
-})
+app.post("/submit", (request, response) => {
+    console.log("submitted data", request.body);
+    response.send("User Successfully updated");
+});
 
 app.listen(port);
-console.log('Server started at http://localhost:' + port);
+console.log("Server started at http://localhost:" + port);
