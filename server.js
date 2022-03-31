@@ -6,6 +6,11 @@ const { save } = require("./save");
 
 let { userData } = require("./store");
 
+const pug = require("pug");
+
+var ReactDOMServer = require('react-dom/server');
+
+
 // import express from 'express';
 // import path from 'path';
 // import bodyParser from 'body-parser';
@@ -21,10 +26,10 @@ const port = process.env.PORT || 8080;
 
 app.set("view engine", "pug");
 
-// var React = require('react');
-// // Our bundle expects React to be a global
-// global.React = React;
-// var hCardComponent = require('./public/main.js').default;
+var React = require("react");
+// Our bundle expects React to be a global
+global.React = React;
+var hCardComponent = require("./public/main.js").default;
 
 // const save = (props) => {
 //     console.log('hello',props);
@@ -38,7 +43,34 @@ app.use(express.static("public"));
 
 // sendFile will go here
 app.get("*", function (req, res) {
-    res.render("index.pug", { data: JSON.stringify(userData) });
+    const compiledFunction = pug.compileFile("./views/index.pug");
+    let test = compiledFunction({
+        hCard: hCardComponent,
+        data: JSON.stringify(userData),
+    });
+    let test2 = ReactDOMServer.renderToString(React.createElement(
+      hCardComponent,userData
+    ));
+    console.log('test2',test2)
+    // res.send(test2);
+    res.render("index.pug", {
+        dataTest2: JSON.stringify(test2),
+    });
+    // ReactDOM.render(
+    //     React.createElement(hCardComponent, userData),
+    //     test.querySelector(".HcardApp")
+    // );
+    //     console.log("line48", test);
+    //     // res.set('Content-Type', 'text/html');
+    // res.send(Buffer.from(test));
+    // res.send(test);
+
+
+
+    // res.render("index.pug", {
+    //     // hCard: hCardComponent,
+    //     data: JSON.stringify(userData),
+    // });
 });
 
 //POST update, updating userData based on input selection
