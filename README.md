@@ -4,6 +4,8 @@ SSR and CSR is seperated out in server.js, This is due to "var hCardComponent = 
 
 As such, please uncomment 'working 1' or 'working 2' for SSR and CSR respectively. 'Working 3' represents my trial to see if this was a PUG issue that can be fixed via HTML.
 
+I thought about using another route to deal with non-js browsers using <noscript> to reroute if js is disabled. But having 2 different pages for JS is bad SEO.
+
 we use PUG to inject userData easily into HTML. By using this injection we can now change userData in the save() function. For simplicity, we save userData in a seperate file and export it to server.js. However, Ideally I would use either useContext or useReducer(redux) to deal with saving user data. 
 
 Connecting to AWS, we can use an RDS to store userData, with each row representing a specific user. Everytime update/submit is called, it sends a SET SQL to update specifics of that user. 
