@@ -24,9 +24,9 @@ app.use(bodyParser.json());
 //serving up files in public
 app.use(express.static("public"));
 
-// sendFile will go here
+//serving get requests 
 app.get("*", function (req, res) {
-    //working 1 SSR
+    //working 1 SSR using PUG
     // const compiledFunction = pug.compileFile("./views/index.pug");
     // let test = compiledFunction({
     //     hCard: hCardComponent,
@@ -40,12 +40,12 @@ app.get("*", function (req, res) {
     // console.log("test2", test2);
     // res.send(final);
 
-    // working 3 no SSR
+    // working 2 no SSR
     res.render("index.pug", {
         data: JSON.stringify(userData),
     });
 
-    //working 2 SSR
+    //working 3 SSR using HTML 
     // let appData = ReactDOMServer.renderToString(
     //     React.createElement(hCardComponent, userData)
     // );
