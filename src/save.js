@@ -9,7 +9,7 @@ const save = (request,userData) => {
             console.log('body',body);
             return {...userData,...body}
             break;
-        case 'submit':
+        case '/submit':
             console.log('submission');
             break;
         default:

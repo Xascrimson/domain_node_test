@@ -2,8 +2,8 @@ const express = require("express");
 const path = require("path");
 const bodyParser = require("body-parser");
 const fs = require("fs");
-const { save } = require("./save");
-let { userData } = require("./store");
+const { save } = require("./save.js");
+let { userData } = require("./data/store.js");
 const pug = require("pug");
 var ReactDOMServer = require("react-dom/server");
 
@@ -16,7 +16,7 @@ app.set("view engine", "pug");
 var React = require("react");
 // Our bundle expects React to be a global
 global.React = React;
-var hCardComponent = require("./public/main.js").default;
+var hCardComponent = require("../public/main.js").default;
 
 app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
@@ -70,7 +70,6 @@ app.post("/update", (request, response) => {
 
 //POST submit, update hcard with new user data, + future can send to parameter store etc, so all servers update with new data.
 app.post("/submit", (request, response) => {
-    console.log("submitted");
     response.redirect("/");
 });
 
