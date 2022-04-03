@@ -10,3 +10,8 @@ Connecting to AWS, we can use an RDS to store userData, with each row representi
 To scale this application, we need to ensure client is always up to date with database. We can either use websockets, poll database and update periodically, or pull database right before submission and notify user that there has been a change.
 
 The application runs on Node.js express + PUG.
+
+Spent 1 hour setting up express structures + requests.
+2 hours understanding PUG how to inject dynamic data into HTML.
+A day dealing with "var hCardComponent = require('./dist/main.js').default;" only to realise yarn package is too new, as .default no longer came with yarn.
+A day dealing with SSR + dealing with /update issue not appearing.
