@@ -10,19 +10,14 @@ head
   script(src='https://unpkg.com/react@15/dist/react.js')
   script(src='https://unpkg.com/react-dom@15/dist/react-dom.js')
   script(src='main.js')
-  
-
   script.
     (function() {
-      !{dataTest2}
 
-    //- ReactDOM.render(
-    //- //- React.createElement(
-    //- //- window.hCard.default,
-    //- //- !{data}
-    //- //- ),
-    //- !{dataTest2},
-
-    //- document.querySelector('.HcardApp')
-    //- );
+    ReactDOM.render(
+    React.createElement(
+    window.hCard.default,
+    !{data}
+    ),
+    document.querySelector('.HcardApp')
+    );
     })();
