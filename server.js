@@ -1,34 +1,22 @@
 const express = require("express");
 const path = require("path");
 const bodyParser = require("body-parser");
-
+const fs = require("fs");
 const { save } = require("./save");
-
 let { userData } = require("./store");
-
-// import express from 'express';
-// import path from 'path';
-// import bodyParser from 'body-parser';
-// const __dirname = path.resolve();
-
-// var React = require('react');
-// // Our bundle expects React to be a global
-// global.React = React;
-// var hCardComponent = require('./public/main.js').default;
+const pug = require("pug");
+var ReactDOMServer = require("react-dom/server");
 
 const app = express();
 const port = process.env.PORT || 8080;
 
 app.set("view engine", "pug");
 
-// var React = require('react');
-// // Our bundle expects React to be a global
-// global.React = React;
-// var hCardComponent = require('./public/main.js').default;
 
-// const save = (props) => {
-//     console.log('hello',props);
-// };
+var React = require("react");
+// Our bundle expects React to be a global
+global.React = React;
+var hCardComponent = require("./public/main.js").default;
 
 app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
@@ -38,7 +26,40 @@ app.use(express.static("public"));
 
 // sendFile will go here
 app.get("*", function (req, res) {
-    res.render("index.pug", { data: JSON.stringify(userData) });
+    //working 1 SSR
+    // const compiledFunction = pug.compileFile("./views/index.pug");
+    // let test = compiledFunction({
+    //     hCard: hCardComponent,
+    //     data: JSON.stringify(userData),
+    // });
+
+    // let test2 = ReactDOMServer.renderToString(
+    //     React.createElement(hCardComponent, userData)
+    // );
+    // let final = test.replace('<div class="HcardApp">', test2);
+    // console.log("test2", test2);
+    // res.send(final);
+
+    // working 3 no SSR
+    res.render("index.pug", {
+        data: JSON.stringify(userData),
+    });
+
+    //working 2 SSR
+    // let appData = ReactDOMServer.renderToString(
+    //     React.createElement(hCardComponent, userData)
+    // );
+
+    // fs.readFile('index.html', 'utf8', (err, data) => {
+    //     if (err) {
+    //       console.error('Something went wrong:', err);
+    //       return res.status(500).send('Oops, better luck next time!');
+    //     }
+
+    //     return res.send(
+    //       data.replace('<div class="HcardApp" />', `<div id="root">${appData}</div>`)
+    //     );
+    //   });
 });
 
 //POST update, updating userData based on input selection
@@ -49,6 +70,7 @@ app.post("/update", (request, response) => {
 
 //POST submit, update hcard with new user data, + future can send to parameter store etc, so all servers update with new data.
 app.post("/submit", (request, response) => {
+    console.log("submitted");
     response.redirect("/");
 });
 
